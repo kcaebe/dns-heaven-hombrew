@@ -5,23 +5,23 @@
 class DnsHeaven < Formula
   desc "Fixes stupid macOS DNS stack (/etc/resolv.conf)"
   homepage "https://github.com/kcaebe/dns-heaven"
-  version "0.1.6"
+  version "0.1.7"
 
   depends_on "go"
   depends_on :macos
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/kcaebe/dns-heaven/releases/download/v0.1.6/dns-heaven_0.1.6_darwin_arm64.tar.gz"
-      sha256 "5531fbabe1295d5fdc5147f83a4786e876349364c0144cbe77ed60396e36f4dd"
+      url "https://github.com/kcaebe/dns-heaven/releases/download/v0.1.7/dns-heaven_0.1.7_darwin_arm64.tar.gz"
+      sha256 "50ece54f4178310492c382a4e67eaf36db18832abf54f5aea56b75347d422685"
 
       def install
         bin.install "dns-heaven"
       end
     end
     if Hardware::CPU.intel?
-      url "https://github.com/kcaebe/dns-heaven/releases/download/v0.1.6/dns-heaven_0.1.6_darwin_amd64.tar.gz"
-      sha256 "3d3b6419553ce1071ee9fe8a1901073644e863539cb945f3284259fc8bba5a8b"
+      url "https://github.com/kcaebe/dns-heaven/releases/download/v0.1.7/dns-heaven_0.1.7_darwin_amd64.tar.gz"
+      sha256 "b9d3e0e117c945b26a2ce8f506a6db40b18e74e5ec5d23e555e8bb8d1a2c7602"
 
       def install
         bin.install "dns-heaven"
@@ -29,33 +29,10 @@ class DnsHeaven < Formula
     end
   end
 
-  def post_install
-    'echo "$(whoami) ALL=(ALL) NOPASSWD: $(which touch)" | sudo tee /etc/sudoers.d/touch'
-  end
-
-  plist_options startup: false
-
-  def plist
-    <<~EOS
-      <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-    <key>Label</key>
-    <string>com.greenboxal.dnsheaven</string>
-    <key>ProgramArguments</key>
-    <array>
-        <string>sudo</string>
-        <string>#{bin}/dns-heaven</string>
-    </array>
-    <key>KeepAlive</key>
-    <true/>
-    <key>RunAtLoad</key>
-    <true/>
-</dict>
-</plist>
-
-    EOS
+  service do
+    run [#{bin}/dns-heaven]
+    keep_alive true
+    requires_root true
   end
 
   test do
