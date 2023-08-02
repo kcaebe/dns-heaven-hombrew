@@ -5,23 +5,23 @@
 class DnsHeaven < Formula
   desc "Fixes stupid macOS DNS stack (/etc/resolv.conf)"
   homepage "https://github.com/kcaebe/dns-heaven"
-  version "0.1.7"
+  version "0.1.8"
 
   depends_on "go"
   depends_on :macos
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/kcaebe/dns-heaven/releases/download/v0.1.7/dns-heaven_0.1.7_darwin_arm64.tar.gz"
-      sha256 "50ece54f4178310492c382a4e67eaf36db18832abf54f5aea56b75347d422685"
+      url "https://github.com/kcaebe/dns-heaven/releases/download/v0.1.8/dns-heaven_0.1.8_darwin_arm64.tar.gz"
+      sha256 "479dbc68cef47996e7c19141672b0b845114616f484ca9e661ba6f05920934f7"
 
       def install
         bin.install "dns-heaven"
       end
     end
     if Hardware::CPU.intel?
-      url "https://github.com/kcaebe/dns-heaven/releases/download/v0.1.7/dns-heaven_0.1.7_darwin_amd64.tar.gz"
-      sha256 "b9d3e0e117c945b26a2ce8f506a6db40b18e74e5ec5d23e555e8bb8d1a2c7602"
+      url "https://github.com/kcaebe/dns-heaven/releases/download/v0.1.8/dns-heaven_0.1.8_darwin_amd64.tar.gz"
+      sha256 "2adc6e531e344441a2dd0a71e5f323a78ccc5be25b89e9a84a2cf45db2c269a1"
 
       def install
         bin.install "dns-heaven"
